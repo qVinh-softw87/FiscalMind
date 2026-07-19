@@ -1,0 +1,7 @@
+fastapi==0.115.5
+uvicorn==0.32.1
+python-multipart==0.0.12
+paddlepaddle==2.6.2  # Engine chạy Paddle
+pillow==11.0.0
+numpy==1.26.4
+# paddleocr được cài trực tiếp từ repo clone trong Dockerfile bằng lệnh `pip install -e .`
