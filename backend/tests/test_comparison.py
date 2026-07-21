@@ -47,7 +47,7 @@ class TestComparisonService:
 
         from app.services.comparison_service import ComparisonService
         from app.models.user import User
-        from app.models.document import Document, DocumentStatus
+        from app.models.document import Document, DocumentStatus, DocumentType
         
         fake_user = User(id=uuid.uuid4(), email="user@example.com")
         
@@ -56,6 +56,7 @@ class TestComparisonService:
             user_id=fake_user.id,
             original_filename="company_a.pdf",
             status=DocumentStatus.READY,
+            document_type=DocumentType.OTHER,
             parsed_data={"normalized_data": {"net_revenue": 100, "net_profit": 20, "equity": 100}}
         )
         
@@ -64,11 +65,15 @@ class TestComparisonService:
             user_id=fake_user.id,
             original_filename="company_b.pdf",
             status=DocumentStatus.READY,
+            document_type=DocumentType.OTHER,
             parsed_data={"normalized_data": {"net_revenue": 100, "net_profit": 10, "equity": 100}}
         )
 
         db_mock = AsyncMock()
-        db_mock.execute = AsyncMock(return_value=MagicMock(scalars=MagicMock(return_value=MagicMock(all=MagicMock(return_value=[doc_a, doc_b])))))
+        result_mock = MagicMock()
+        result_mock.scalars.return_value.all.return_value = [doc_a, doc_b]
+        result_mock.scalar_one_or_none.return_value = None
+        db_mock.execute = AsyncMock(return_value=result_mock)
 
         service = ComparisonService(db=db_mock)
         request = ComparisonRequest(document_ids=[doc_a.id, doc_b.id])

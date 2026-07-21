@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Hanken Grotesk", sans-serif;
+
+  /* Custom Corporate Colors */
+  --color-surface-bg: #F8FAFC;
+  --color-surface-border: #E2E8F0;
+  --color-on-surface: #0b1c30;
+  --color-on-surface-variant: #45464d;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-container-high: #dce9ff;
+  --color-surface-container-highest: #d3e4fe;
+  --color-surface-container: #e5eeff;
+  --color-surface-bright: #f8f9ff;
+  --color-outline: #76777d;
+  --color-outline-variant: #c6c6cd;
+  
+  --color-primary-container: #131b2e;
+  --color-on-primary-container: #7c839b;
+  --color-on-primary-fixed-variant: #3f465c;
+  
+  --color-ai-accent: #8B5CF6;
+  --color-tertiary-fixed: #d8e2ff;
+  --color-tertiary-fixed-dim: #adc6ff;
+  --color-tertiary-container: #001a42;
+  --color-on-tertiary-fixed: #001a42;
+
+  --color-status-healthy: #10B981;
+  --color-status-warning: #F59E0B;
+  --color-status-critical: #EF4444;
+}
+
+/* Custom styles for high-fidelity interactive elements */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #E2E8F0;
+  border-radius: 20px;
+}
+
+.ai-pulse {
+  animation: pulse-ai 2s infinite;
+}
+
+@keyframes pulse-ai {
+  0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(139, 92, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+}
+
+.drag-active {
+  border-color: #8B5CF6 !important;
+  background-color: rgba(139, 92, 246, 0.05) !important;
+}
+
+/* Base styles override */
+body {
+  color: var(--color-on-surface);
+  background-color: var(--color-surface-bg);
+}

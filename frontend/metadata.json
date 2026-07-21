@@ -1,0 +1,6 @@
+{
+  "name": "FiscalMind AI",
+  "description": "Technical Corporate financial analysis platform with CFO AI Advisor",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Annotated
+from typing import Annotated, Optional
 
 import redis.asyncio as aioredis
 from fastapi import Depends
@@ -22,7 +22,7 @@ RedisClient = Annotated[aioredis.Redis, Depends(get_redis_client)]
 # auto_error=False: we raise our own UnauthorizedError instead of FastAPI's default
 _bearer_scheme = HTTPBearer(auto_error=False)
 BearerToken = Annotated[
-    HTTPAuthorizationCredentials | None,
+    Optional[HTTPAuthorizationCredentials],
     Depends(_bearer_scheme),
 ]
 

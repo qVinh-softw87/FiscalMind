@@ -79,6 +79,9 @@ class TestInsightService:
         )
 
         db_mock = AsyncMock()
+        result_mock = MagicMock()
+        result_mock.scalar_one_or_none.return_value = None
+        db_mock.execute = AsyncMock(return_value=result_mock)
         
         with patch("app.services.insight_service.DocumentRepository") as mock_repo_class:
             mock_repo = mock_repo_class.return_value

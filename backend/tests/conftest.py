@@ -53,6 +53,17 @@ async def db_session() -> AsyncGenerator[AsyncSession, None]:
     async with TestSessionLocal() as session:
         yield session
         await session.rollback()
+        # Clean up all table contents to prevent cross-test DB pollution
+        from sqlalchemy import text
+        try:
+            await session.execute(text("DELETE FROM messages;"))
+            await session.execute(text("DELETE FROM conversations;"))
+            await session.execute(text("DELETE FROM custom_benchmarks;"))
+            await session.execute(text("DELETE FROM documents;"))
+            await session.execute(text("DELETE FROM users;"))
+            await session.commit()
+        except Exception:
+            pass
 
 
 @pytest_asyncio.fixture

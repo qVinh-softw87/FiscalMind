@@ -68,7 +68,8 @@ class TestBenchmarkEngine:
         db_session.add(custom)
         await db_session.commit()
 
-        # Resolve again
+        # Resolve again (use a fresh resolver to clear instance cache)
+        resolver = BenchmarkResolver(db_session)
         post_override = await resolver.resolve_thresholds(
             metric="roe", sector="technology", user_id=fake_user_id
         )

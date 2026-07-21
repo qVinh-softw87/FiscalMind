@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import Literal
+from typing import Literal, Union, Optional
 
 from pydantic import AnyHttpUrl, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
-    BACKEND_CORS_ORIGINS: list[AnyHttpUrl | str] = [
+    BACKEND_CORS_ORIGINS: list[Union[AnyHttpUrl, str]] = [
         "http://localhost:5173",
         "http://localhost:3000",
     ]
@@ -64,8 +64,8 @@ class Settings(BaseSettings):
     # ── Qdrant ────────────────────────────────────────────────────────────────
     QDRANT_HOST: str = "localhost"
     QDRANT_PORT: int = 6333
-    QDRANT_URL: str | None = None  # Full HTTPS URL for Qdrant Cloud
-    QDRANT_API_KEY: str | None = None
+    QDRANT_URL: Optional[str] = None  # Full HTTPS URL for Qdrant Cloud
+    QDRANT_API_KEY: Optional[str] = None
 
     # ── OCR ───────────────────────────────────────────────────────────────────
     OCR_SERVICE_URL: str = "http://localhost:8002"
@@ -87,9 +87,9 @@ class Settings(BaseSettings):
     MAX_UPLOAD_SIZE_MB: int = 50
 
     # ── AWS S3 (optional) ─────────────────────────────────────────────────────
-    AWS_ACCESS_KEY_ID: str | None = None
-    AWS_SECRET_ACCESS_KEY: str | None = None
-    AWS_S3_BUCKET: str | None = None
+    AWS_ACCESS_KEY_ID: Optional[str] = None
+    AWS_SECRET_ACCESS_KEY: Optional[str] = None
+    AWS_S3_BUCKET: Optional[str] = None
     AWS_S3_REGION: str = "ap-southeast-1"
 
     @property

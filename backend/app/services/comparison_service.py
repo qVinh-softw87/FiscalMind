@@ -102,7 +102,7 @@ class ComparisonService:
             year = normalized_data.get("year")
             
             # Form clean label: "Company (Year)" or "Filename"
-            company_name = doc.company_name or doc.original_filename.rsplit(".", 1)[0]
+            company_name = getattr(doc, "company_name", None) or (doc.parsed_data or {}).get("company_name") or doc.original_filename.rsplit(".", 1)[0]
             label = f"{company_name} ({year})" if year else company_name
 
             compared_entities.append(CompanyMeta(

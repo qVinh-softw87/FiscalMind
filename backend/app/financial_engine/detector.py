@@ -38,7 +38,7 @@ class StatementDetector:
             r"báo cáo lưu chuyển tiền tệ",
             r"lưu chuyển tiền từ hoạt động",
             r"lưu chuyển tiền thuần",
-            r"tiền và tương đương tiền",
+            r"tiền và (các khoản )?tương đương tiền",
             r"cash flow statement",
             r"cash flows from operating",
         ],

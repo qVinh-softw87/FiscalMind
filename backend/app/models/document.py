@@ -3,8 +3,9 @@ from __future__ import annotations
 import uuid
 from datetime import datetime
 from enum import Enum
+from typing import Optional
 
-from sqlalchemy import BigInteger, DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import JSON, BigInteger, DateTime, ForeignKey, Integer, String, Text, func
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -98,19 +99,19 @@ class Document(Base):
         nullable=False,
         index=True,
     )
-    error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
+    error_message: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
     # ── Versioning ────────────────────────────────────────────────────────────
     version: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
-    parent_id: Mapped[uuid.UUID | None] = mapped_column(
+    parent_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("documents.id", ondelete="SET NULL"),
         nullable=True,
     )
 
     # ── AI / Parsed Data (populated in Phase 4) ───────────────────────────────
-    parsed_data: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
-    page_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    parsed_data: Mapped[Optional[dict]] = mapped_column(JSON().with_variant(JSONB, "postgresql"), nullable=True)
+    page_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
     # ── Soft Delete ───────────────────────────────────────────────────────────
     is_deleted: Mapped[bool] = mapped_column(

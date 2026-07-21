@@ -40,6 +40,8 @@ class BenchmarkResolver:
         Traverses the priority providers until a threshold range matches.
         Guarantees fallback to DefaultBenchmarkProvider (so it never returns None).
         """
+        if not sector:
+            sector = "general"
         cache_key = (metric.lower(), sector.lower(), user_id, org_id)
         if cache_key in self._cache:
             return self._cache[cache_key]

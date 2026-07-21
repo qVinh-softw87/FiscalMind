@@ -44,7 +44,7 @@ async def chat_stream(
     - `conversation_id`: pass an existing ID to continue conversation.
     """
     service = _service(db)
-    generator = await service.execute_chat_stream(
+    generator = service.execute_chat_stream(
         payload=payload,
         current_user=current_user,
     )

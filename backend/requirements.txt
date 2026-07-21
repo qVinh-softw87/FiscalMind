@@ -15,6 +15,8 @@ celery[redis]==5.4.0
 # ─── Config & Validation ──────────────────────────────────────────────────────
 pydantic==2.10.3
 pydantic-settings==2.6.1
+email-validator==2.2.0
+
 
 # ─── Security / Auth ──────────────────────────────────────────────────────────
 python-jose[cryptography]==3.3.0
@@ -36,7 +38,7 @@ voyageai==0.3.1       # Voyage AI SDK for embeddings and reranking
 # ─── Document Processing ──────────────────────────────────────────────────────
 pdfplumber==0.11.4
 pytesseract==0.3.13
-Pillow==11.0.0
+Pillow==10.4.0
 openpyxl==3.1.5
 pandas==2.2.3
 aiofiles==24.1.0      # Async file I/O for non-blocking storage writes
@@ -48,3 +50,5 @@ pytest-cov==6.0.0
 httpx==0.28.1
 aiosqlite==0.20.0       # In-memory SQLite for tests (no PostgreSQL needed)
 fakeredis==2.26.2        # In-memory Redis mock for tests
+eval-type-backport==0.2.0
+

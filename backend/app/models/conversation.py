@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime, timezone
+from typing import Optional
 
-from sqlalchemy import DateTime, ForeignKey, String, Text, func
+from sqlalchemy import DateTime, ForeignKey, String, Text, func, JSON
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -96,7 +97,7 @@ class Message(Base):
 
     # JSONB column to store lists of citations (sources)
     # Format: [{"filename": "BCTC_2023.pdf", "page_index": 3, "text": "..."}]
-    citations: Mapped[list[dict] | None] = mapped_column(JSONB, nullable=True)
+    citations: Mapped[Optional[list[dict]]] = mapped_column(JSON().with_variant(JSONB, "postgresql"), nullable=True)
 
     # ── Timestamps ────────────────────────────────────────────────────────────
     created_at: Mapped[datetime] = mapped_column(

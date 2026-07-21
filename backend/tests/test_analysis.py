@@ -25,7 +25,8 @@ class TestFinancialFormulas:
 
 
 class TestFinancialRatioCalculator:
-    def test_calculation_threshold_matching(self):
+    @pytest.mark.asyncio
+    async def test_calculation_threshold_matching(self, db_session):
         normalized_data = {
             "net_revenue": 1000.0,
             "gross_profit": 400.0,
@@ -37,7 +38,9 @@ class TestFinancialRatioCalculator:
             "equity": 1000.0,
         }
 
-        ratios = FinancialRatioCalculator.calculate_ratios(normalized_data)
+        import uuid
+        user_id = uuid.uuid4()
+        ratios = await FinancialRatioCalculator.calculate_ratios(normalized_data, db_session, user_id)
 
         # 1. Profitability ROE check
         # ROE = 200 / 1000 = 20% (> 15% Healthy)
@@ -54,7 +57,8 @@ class TestFinancialRatioCalculator:
         assert ratios["liquidity"]["current_ratio"]["value"] == 2.0
         assert ratios["liquidity"]["current_ratio"]["status"] == "HEALTHY"
 
-    def test_critical_threshold_matching(self):
+    @pytest.mark.asyncio
+    async def test_critical_threshold_matching(self, db_session):
         normalized_data = {
             "net_revenue": 1000.0,
             "gross_profit": 100.0,
@@ -66,7 +70,9 @@ class TestFinancialRatioCalculator:
             "equity": 200.0,
         }
 
-        ratios = FinancialRatioCalculator.calculate_ratios(normalized_data)
+        import uuid
+        user_id = uuid.uuid4()
+        ratios = await FinancialRatioCalculator.calculate_ratios(normalized_data, db_session, user_id)
 
         # 1. ROE = 10 / 200 = 5% (>= 5% -> Warning, < 5% Critical)
         assert ratios["profitability"]["roe"]["value"] == 0.05

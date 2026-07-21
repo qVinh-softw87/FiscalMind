@@ -132,6 +132,10 @@ class FinancialDataNormalizer:
         elif "." in clean:
             if clean.count(".") > 1:
                 clean = clean.replace(".", "")
+            else:
+                parts = clean.split(".")
+                if parts[0] != "0" and len(parts[-1]) == 3:
+                    clean = clean.replace(".", "")
 
         try:
             val = float(clean)
